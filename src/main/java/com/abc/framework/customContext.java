@@ -21,7 +21,7 @@ public class customContext {
 
     private final static HashMap<Class, List<Class>> map = new HashMap<Class, List<Class>>();
 
-    //beanmap用来放初始化好的对象。id：对象
+    //beanmap用来放初始化好的对象
     public static final  HashMap<String, Object> beansMap = new HashMap<String, Object>();
 
     private static final List<Class> beansList = new ArrayList<Class>();
@@ -47,13 +47,11 @@ public class customContext {
     /**
      *属性注入
      */
-
     private Object inject(Class bossClass) {
         try {
             //通过反射给water中的变量赋值
             Field[] fields = bossClass.getDeclaredFields();
 //            T boss = bossClass.newInstance();
-
             //保证单例------------------------
             String id1 = getId(bossClass);
             Object boss = beansMap.get(id1);
@@ -141,18 +139,17 @@ public class customContext {
 //                }
             }
 
-
             return boss;
+
         }catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }catch (UnknowException e) {
-
         }
+
         return null;
     }
-
 
     /**
      *
@@ -197,7 +194,6 @@ public class customContext {
                         }
                     }
                 }
-
                 System.out.println(map);
                 //在有component注解的类上找他们的父类或者接口
             }
@@ -207,18 +203,15 @@ public class customContext {
             Object obj = inject(aClass);
             String id = getId(aClass);
             beansMap.put(id,obj);
-
         }
-
     }
-
     private String getId(Class aClass){
-        String tempId = aClass.getName();
+        String tId = aClass.getName();
         //获取最后一个“.”的下标
-        int lastIndex = tempId.lastIndexOf(".");
-        tempId = tempId.substring(lastIndex+1, tempId.length());
-        char firstChar = tempId.toLowerCase().charAt(0);
-        String substring = tempId.substring(1, tempId.length());
+        int lastIndex = tId.lastIndexOf(".");
+        tId = tId.substring(lastIndex+1, tId.length());
+        char firstChar = tId.toLowerCase().charAt(0);
+        String substring = tId.substring(1, tId.length());
         String id = firstChar+substring;
         return id;
     }
