@@ -4,7 +4,6 @@ import com.abc.annotation.Autowired;
 import com.abc.annotation.Component;
 import com.abc.exception.UnknowException;
 import com.abc.test.test02;
-
 import java.io.File;
 import java.lang.reflect.Field;
 import java.net.URL;
@@ -45,7 +44,7 @@ public class customContext {
     }
 
     /**
-     *属性注入
+     * 属性注入
      */
     private Object inject(Class bossClass) {
         try {
@@ -59,7 +58,6 @@ public class customContext {
                 beansMap.put(id1,boss);
             }
             //----------------------------
-
             //找到water
             for (int i = 0; i < fields.length; i++) {
                 Field field = fields[i];
@@ -92,7 +90,6 @@ public class customContext {
 
                         }else{
                             boolean isAutowiredFail = true;
-
                             for (int j = 0; j < classList.size(); j++) {
                                 Class aClass = classList.get(j);
                                 String fieldName = field.getName();
@@ -131,23 +128,14 @@ public class customContext {
                         }
                     }
                 }
-                //比对属性名
-//                if ("water".equals(field.getName())) {
-//                    //给water赋值
-//                    //参数1：属性所有者
-//                    field.set(boss, new Water());
-//                }
             }
-
             return boss;
-
         }catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }catch (UnknowException e) {
         }
-
         return null;
     }
 
@@ -173,15 +161,11 @@ public class customContext {
                 Class<?> aClass = Class.forName(packages + "." + split[0]);
                 Component annotation = aClass.getAnnotation(Component.class);
                 if (annotation != null) {
-
                     beansList.add(aClass);
-
                     //所有Component标注的类的接口，以及接口对应的所有实现类 （此处逻辑需要在依赖注入之前执行）
                     Class<?>[] interfaces = aClass.getInterfaces();
-
                     for (int j=0; j<interfaces.length; j++) {
                         Class<?> anInterface = interfaces[j];
-
                         List<Class> sonList = map.get(anInterface);
                         if (sonList == null) {
                             //第一次找到这个father，就保存到map中
@@ -205,6 +189,10 @@ public class customContext {
             beansMap.put(id,obj);
         }
     }
+
+    /**
+     *
+     */
     private String getId(Class aClass){
         String tId = aClass.getName();
         //获取最后一个“.”的下标
